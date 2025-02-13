@@ -1,0 +1,128 @@
+{
+	"summer-vacation": {
+		"type": "yearly",
+		"message": "Wakacje trwają!",
+		"dates": [
+			{
+				"year": 2025,
+				"start": "June 28, 2025",
+				"end": "August 31, 2025"
+			},
+			{
+				"year": 2026,
+				"start": "June 27, 2026",
+				"end": "August 31, 2026"
+			},
+			{
+				"year": 2027,
+				"start": "June 26, 2027",
+				"end": "August 31, 2027"
+			},
+			{
+				"year": 2028,
+				"start": "June 24, 2028",
+				"end": "September 3, 2028"
+			},
+			{
+				"year": 2029,
+				"start": "June 16, 2029",
+				"end": "September 9, 2029"
+			},
+			{
+				"year": 2030,
+				"start": "June 15, 2030",
+				"end": "September 8, 2030"
+			}
+		]
+	},
+	"winter-break": {
+		"type": "yearly",
+		"message": "Ferie właśnie trwają!",
+		"dates": [
+			{
+				"year": 2025,
+				"start": "January 20, 2025",
+				"end": "March 2, 2025"
+			},
+			{
+				"year": 2026,
+				"start": "January 19, 2026",
+				"end": "March 1, 2026"
+			},
+			{
+				"year": 2027,
+				"start": "January 18, 2027",
+				"end": "February 28, 2027"
+			},
+			{
+				"year": 2028,
+				"start": "January 17, 2028",
+				"end": "February 27, 2028"
+			},
+			{
+				"year": 2029,
+				"start": "January 15, 2029",
+				"end": "February 25, 2029"
+			},
+			{
+				"year": 2030,
+				"start": "January 14, 2030",
+				"end": "February 24, 2030"
+			}
+		]
+	},
+	"may-day": {
+		"type": "fixed",
+		"start": "May 1, YYYY",
+		"end": "May 3, YYYY",
+		"message": "Majówka właśnie trwa!"
+	},
+	"christmas": {
+		"type": "fixed",
+		"start": "December 24, YYYY",
+		"end": "December 26, YYYY",
+		"message": "Wesołych Świąt!"
+	},
+	"easter": {
+		"type": "yearly",
+		"message": "Wesołych Świąt!",
+		"dates": [
+			{
+				"year": 2025,
+				"start": "April 20, 2025",
+				"end": "April 22, 2025"
+			},
+			{
+				"year": 2026,
+				"start": "April 5, 2026",
+				"end": "April 7, 2026"
+			},
+			{
+				"year": 2027,
+				"start": "March 28, 2027",
+				"end": "March 30, 2027"
+			},
+			{
+				"year": 2028,
+				"start": "April 16, 2028",
+				"end": "April 18, 2028"
+			},
+			{
+				"year": 2029,
+				"start": "April 1, 2029",
+				"end": "April 3, 2029"
+			},
+			{
+				"year": 2030,
+				"start": "April 21, 2030",
+				"end": "April 23, 2030"
+			}
+		]
+	},
+	"new-year": {
+		"type": "fixed",
+		"start": "December 31, YYYY",
+		"end": "December 31, YYYY",
+		"message": "Wystrzałowego Sylwestra!"
+	}
+}

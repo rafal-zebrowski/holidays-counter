@@ -1,139 +1,131 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const countdownDisplay = document.getElementById('countdown-display');
-    const vacationMessage = document.getElementById('vacation-message');
-    const pageTitle = document.querySelector('h1');
-    const pageSubtitle = document.querySelector('.lead');
+let currentTimer = null;
 
-    // Holiday dates configuration
-    const holidays = {
-        wakacje: {
-            title: 'Summer Vacation Countdown',
-            subtitle: 'Get ready for an amazing summer break!',
-            dates: year => ({
-                start: new Date(`June 28, ${year}`),
-                end: new Date(`August 31, ${year}`)
-            })
-        },
-        ferie: {
-            title: 'Winter Break Countdown',
-            subtitle: 'Time for winter adventures!',
-            dates: year => ({
-                start: new Date(`January 15, ${year}`),
-                end: new Date(`January 28, ${year}`)
-            })
-        },
-        majowka: {
-            title: 'May Day Break Countdown',
-            subtitle: 'Spring holiday is coming!',
-            dates: year => ({
-                start: new Date(`May 1, ${year}`),
-                end: new Date(`May 3, ${year}`)
-            })
-        },
-        bozenarodzenie: {
-            title: 'Christmas Countdown',
-            subtitle: 'Getting ready for the magical time!',
-            dates: year => ({
-                start: new Date(`December 24, ${year}`),
-                end: new Date(`December 26, ${year}`)
-            })
-        },
-        wielkanoc: {
-            title: 'Easter Countdown',
-            subtitle: 'Spring celebration is approaching!',
-            dates: year => {
-                // Easter 2025: April 20
-                return {
-                    start: new Date(`April 20, ${year}`),
-                    end: new Date(`April 21, ${year}`)
-                };
+function initializeCounter(holidayType) {
+    fetch('data/dates.json')
+        .then(response => response.json())
+        .then(data => {
+            const holiday = data[holidayType];
+            if (!holiday) return;
+
+            updateCounter(holiday);
+
+            if (currentTimer) {
+                clearInterval(currentTimer);
             }
-        },
-        sylwester: {
-            title: 'New Year Countdown',
-            subtitle: 'Counting down to the new beginning!',
-            dates: year => ({
-                start: new Date(`December 31, ${year}`),
-                end: new Date(`January 1, ${year + 1}`)
-            })
-        }
-    };
 
-    let currentHoliday = 'wakacje';
+            currentTimer = setInterval(() => updateCounter(holiday), 1000);
+        })
+        .catch(error => console.error('Error loading dates:', error));
+}
 
-    function updateHolidayDisplay(holidayKey) {
-        const holiday = holidays[holidayKey];
-        pageTitle.textContent = holiday.title;
-        pageSubtitle.textContent = holiday.subtitle;
+function getHolidayDates(holiday) {
+    const now = new Date();
+    const currentYear = now.getFullYear();
 
-        // Update active nav link
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.classList.remove('active');
-            if (link.dataset.counter === holidayKey) {
-                link.classList.add('active');
-            }
-        });
-    }
+    if (holiday.type === "fixed") {
+        let startDate = new Date(holiday.start.replace('YYYY', currentYear));
+        let endDate = new Date(holiday.end.replace('YYYY', currentYear));
 
-    function getNextVacationYear() {
-        const currentDate = new Date();
-        const currentYear = currentDate.getFullYear();
-        const holidayDates = holidays[currentHoliday].dates(currentYear);
-
-        if (currentDate > holidayDates.end) {
-            return currentYear + 1;
-        }
-        return currentYear;
-    }
-
-    function updateCountdown() {
-        const now = new Date();
-        const currentYear = now.getFullYear();
-        const holidayDates = holidays[currentHoliday].dates(currentYear);
-        const nextHolidayDates = holidays[currentHoliday].dates(currentYear + 1);
-
-        // Check if we're in holiday period
-        if (now >= holidayDates.start && now <= holidayDates.end) {
-            countdownDisplay.classList.add('d-none');
-            vacationMessage.classList.remove('d-none');
-            vacationMessage.textContent = `${holidays[currentHoliday].title.replace(' Countdown', '')} is in progress!`;
-            return;
+        // If we've passed this year's dates, use next year's dates
+        if (now > endDate) {
+            startDate = new Date(holiday.start.replace('YYYY', currentYear + 1));
+            endDate = new Date(holiday.end.replace('YYYY', currentYear + 1));
         }
 
-        // Show countdown and hide vacation message
-        countdownDisplay.classList.remove('d-none');
-        vacationMessage.classList.add('d-none');
+        return { startDate, endDate };
+    } else if (holiday.type === "yearly") {
+        // Find the next occurrence of the holiday
+        const futureDates = holiday.dates.filter(date => {
+            const endDate = new Date(date.end);
+            return endDate >= now;
+        }).sort((a, b) => new Date(a.start) - new Date(b.start));
 
-        // Determine target date
-        let targetDate = now > holidayDates.end ? nextHolidayDates.start : holidayDates.start;
+        if (futureDates.length === 0) {
+            console.error('No future dates available for this holiday');
+            return null;
+        }
 
-        // Calculate time difference
-        const diff = targetDate - now;
-
-        // Convert to days, hours, minutes, seconds
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        // Update DOM
-        document.getElementById('days').textContent = String(days).padStart(2, '0');
-        document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-        document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-        document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        const nextDate = futureDates[0];
+        return {
+            startDate: new Date(nextDate.start),
+            endDate: new Date(nextDate.end)
+        };
     }
 
-    // Navigation click handlers
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            currentHoliday = e.target.dataset.counter;
-            updateHolidayDisplay(currentHoliday);
-            updateCountdown();
+    return null;
+}
+
+function updateTitle(year) {
+    const titleElement = document.querySelector(".countdown-container h1");
+
+    if (!titleElement) return;
+
+    titleElement.textContent = titleElement.textContent.replace("${year}", year || "");
+}
+
+function updateCounter(holiday) {
+    const now = new Date();
+    const dates = getHolidayDates(holiday);
+
+    if (!dates) {
+        console.error('Could not determine holiday dates');
+        return;
+    }
+
+    const { startDate, endDate } = dates;
+    updateTitle(startDate.getFullYear());
+    const counterElement = document.getElementById('countdown-display');
+    const messageElement = document.getElementById('vacation-message');
+
+    // Check if holiday is ongoing
+    if (now >= startDate && now <= endDate) {
+        counterElement.classList.add('d-none');
+        messageElement.classList.remove('d-none');
+        return;
+    }
+
+    // Show counter and hide message
+    counterElement.classList.remove('d-none');
+    messageElement.classList.add('d-none');
+
+    // Calculate time difference
+    const diff = startDate - now;
+
+    // Convert time difference to days, hours, minutes, seconds
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    // Update the display
+    document.getElementById('days').textContent = days.toString().padStart(2, '0');
+    document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    navLinks.forEach(link => {
+        link.addEventListener("click", function () {
+            // Usuń klasę "active" ze wszystkich linków
+            navLinks.forEach(link => link.classList.remove("active"));
+
+            // Dodaj klasę "active" do klikniętego linku
+            this.classList.add("active");
+
+            // Opcjonalnie: zapisz wybraną stronę w localStorage, aby aktywny link pozostał po przeładowaniu
+            localStorage.setItem("activeNav", this.getAttribute("data-counter"));
         });
     });
 
-    // Update countdown every second
-    setInterval(updateCountdown, 1000);
-    updateCountdown(); // Initial update
+    // Ustaw aktywny link po odświeżeniu strony
+    const activeNav = localStorage.getItem("activeNav");
+    if (activeNav) {
+        const activeLink = document.querySelector(`.nav-link[data-counter="${activeNav}"]`);
+        if (activeLink) {
+            activeLink.classList.add("active");
+        }
+    }
 });
