@@ -1,0 +1,93 @@
+/* Countdown Box Styling */
+.countdown-box {
+    background: var(--bs-body-bg);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--bs-border-color);
+}
+
+.countdown-number {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--bs-info);
+    display: block;
+}
+
+.countdown-label {
+    font-size: 1rem;
+    color: var(--bs-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Ad Space Styling */
+.ad-space-vertical {
+    height: 100%;
+    min-height: 600px;
+}
+
+.ad-space-horizontal {
+    height: 90px;
+}
+
+.ad-placeholder {
+    background: var(--bs-body-bg);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 2px dashed var(--bs-border-color);
+}
+
+.ad-placeholder i {
+    font-size: 2rem;
+    color: var(--bs-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.ad-placeholder span {
+    color: var(--bs-secondary);
+    font-size: 0.9rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .countdown-number {
+        font-size: 2rem;
+    }
+
+    .countdown-label {
+        font-size: 0.9rem;
+    }
+
+    .ad-space-vertical {
+        min-height: 300px;
+    }
+}
+
+/* Navigation Styling */
+.navbar {
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+.navbar .nav-link {
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: color 0.2s ease-in-out;
+}
+
+.navbar .nav-link:hover {
+    color: var(--bs-info);
+}
+
+/* Footer Styling */
+footer {
+    border-top: 1px solid var(--bs-border-color);
+}
+
+footer p {
+    font-size: 0.9rem;
+}
