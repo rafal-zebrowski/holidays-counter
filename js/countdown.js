@@ -104,28 +104,4 @@ function updateCounter(holiday) {
     document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    const navLinks = document.querySelectorAll(".nav-link");
 
-    navLinks.forEach(link => {
-        link.addEventListener("click", function () {
-            // Usuń klasę "active" ze wszystkich linków
-            navLinks.forEach(link => link.classList.remove("active"));
-
-            // Dodaj klasę "active" do klikniętego linku
-            this.classList.add("active");
-
-            // Opcjonalnie: zapisz wybraną stronę w localStorage, aby aktywny link pozostał po przeładowaniu
-            localStorage.setItem("activeNav", this.getAttribute("data-counter"));
-        });
-    });
-
-    // Ustaw aktywny link po odświeżeniu strony
-    const activeNav = localStorage.getItem("activeNav");
-    if (activeNav) {
-        const activeLink = document.querySelector(`.nav-link[data-counter="${activeNav}"]`);
-        if (activeLink) {
-            activeLink.classList.add("active");
-        }
-    }
-});
