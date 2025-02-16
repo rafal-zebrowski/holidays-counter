@@ -1,69 +1,69 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Odliczanie do wakacji</title>
-    <link href="lib/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Odliczanie do wakacji</title>
+	<link href="lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+	<link href="css/custom.css" rel="stylesheet">
 </head>
 <body class="d-flex flex-column min-vh-100">
-    <!-- Navigation Menu -->
-    <div id="menu-placeholder"></div>
+<!-- Navigation Menu -->
+<div id="menu-placeholder"></div>
 
-    <div class="container-fluid flex-grow-1 d-flex flex-column">
-        <div class="row justify-content-center flex-grow-1">
-            <!-- Main Content Area -->
-            <div class="col-md-6 p-4">
-                <div class="countdown-container text-center">
-                    <h1 class="mb-4">Odliczanie do wakacji ${year}</h1>
-                    <p class="lead mb-5">Przygotuj się na wspaniałe wakacje!</p>
+<div class="container-fluid flex-grow-1 d-flex flex-column">
+	<div class="row justify-content-center flex-grow-1">
+		<!-- Main Content Area -->
+		<div class="col-md-6 p-4">
+			<div class="countdown-container text-center">
+				<h1 class="mb-4">Odliczanie do wakacji ${year}</h1>
+				<p class="lead mb-5">Przygotuj się na wspaniałe wakacje!</p>
 
-                    <div id="countdown-display" class="mb-5">
-                        <div class="row justify-content-center">
-                            <div class="col-sm-3 mb-3">
-                                <div class="countdown-box">
-                                    <span id="days" class="countdown-number">00</span>
-                                    <span class="countdown-label">Dni</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 mb-3">
-                                <div class="countdown-box">
-                                    <span id="hours" class="countdown-number">00</span>
-                                    <span class="countdown-label">Godziny</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 mb-3">
-                                <div class="countdown-box">
-                                    <span id="minutes" class="countdown-number">00</span>
-                                    <span class="countdown-label">Minuty</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 mb-3">
-                                <div class="countdown-box">
-                                    <span id="seconds" class="countdown-number">00</span>
-                                    <span class="countdown-label">Sekundy</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+				<div id="countdown-display" class="mb-5">
+					<div class="row justify-content-center">
+						<div class="col-sm-3 mb-3">
+							<div class="countdown-box">
+								<span id="days" class="countdown-number">00</span>
+								<span class="countdown-label">Dni</span>
+							</div>
+						</div>
+						<div class="col-sm-3 mb-3">
+							<div class="countdown-box">
+								<span id="hours" class="countdown-number">00</span>
+								<span class="countdown-label">Godziny</span>
+							</div>
+						</div>
+						<div class="col-sm-3 mb-3">
+							<div class="countdown-box">
+								<span id="minutes" class="countdown-number">00</span>
+								<span class="countdown-label">Minuty</span>
+							</div>
+						</div>
+						<div class="col-sm-3 mb-3">
+							<div class="countdown-box">
+								<span id="seconds" class="countdown-number">00</span>
+								<span class="countdown-label">Sekundy</span>
+							</div>
+						</div>
+					</div>
+				</div>
 
-                    <div id="vacation-message" class="alert alert-success d-none">
-                        Wakacje trwają!
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+				<div id="vacation-message" class="alert alert-success d-none">
+					Wakacje trwają!
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-    <!-- Footer -->
-    <div id="footer-placeholder" class="mt-auto"></div>
+<!-- Footer -->
+<div id="footer-placeholder" class="mt-auto"></div>
 
-    <script src="lib/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="js/countdown.js"></script>
-    <script src="js/loadComponents.js"></script>
-    <script>
-        initializeCounter('summer-vacation');
-    </script>
+<script src="lib/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="js/countdown.js"></script>
+<script src="js/loadComponents.js"></script>
+<script>
+	initializeCounter('summer-vacation');
+</script>
 </body>
 </html>
